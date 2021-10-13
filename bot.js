@@ -98,7 +98,6 @@ function rollLockedDice(target) {
   client.say(
     target,
     `You rolled a ${result} with a ${diceLock} sided die.`);
-  console.log(`* Executed ${commandName} command`); 
 }
 
 // Called every time the bot connects to Twitch chat
