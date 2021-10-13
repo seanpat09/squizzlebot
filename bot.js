@@ -13,7 +13,7 @@ const opts = {
 
 // Create a client with our options
 const client = new tmi.client(opts);
-let highestRoll = -1;
+let highestRoll = 0;
 
 // Register our event handlers (defined below)
 client.on('message', onMessageHandler);
@@ -23,7 +23,7 @@ client.on('connected', onConnectedHandler);
 client.connect();
 
 // Called every time a message comes in
-function onMessageHandler (target, context, msg, self) {
+function onMessageHandler (target, userstate, msg, self) {
   if (self) { return; } // Ignore messages from the bot
 
   // Remove whitespace from chat message
@@ -34,6 +34,16 @@ function onMessageHandler (target, context, msg, self) {
     rollDice(target, commandName);
   } else {
     console.log(`* Unknown command ${commandName}`);
+  }
+}
+
+function resetDie(target, userstate) {
+  if(userstate.mod === 'true') {
+    highestRoll = 0;
+    client.say(
+        target,
+        `You rolled a ${result} with a ${sides} sided die. The highest roll so far is ${highestRoll}`
+    );
   }
 }
 
@@ -52,7 +62,7 @@ function rollDice (target, commandName) {
   
   client.say(
     target,
-    `You rolled a ${result} with a ${sides} sided die The highest roll so far is ${higestRoll}`
+    `You rolled a ${result} with a ${sides} sided die. The highest roll so far is ${highestRoll}`);
   console.log(`* Executed ${commandName} command`); 
 }
 
