@@ -32,18 +32,27 @@ function onMessageHandler (target, userstate, msg, self) {
   // If the command is known, let's execute it
   if (commandName.startsWith('!d')) {
     rollDice(target, commandName);
-  } else {
+  } else if(commandName === "!resetDie") {
+    resetDie(target, userstate);
+  }
+  else {
     console.log(`* Unknown command ${commandName}`);
   }
 }
 
 function resetDie(target, userstate) {
-  if(userstate.mod === 'true') {
+  console.log(userstate, target);
+  if(isMod(userstate, target)) {
     highestRoll = 0;
     client.say(
         target,
-        `You rolled a ${result} with a ${sides} sided die. The highest roll so far is ${highestRoll}`
+        `The die has been reset. The highest roll so far is ${highestRoll}`
     );
+  } else {
+    client.say(
+      target,
+        "BOP BOP BOP Only mods or the broadcaster can reset the die!"
+    )
   }
 }
 
@@ -69,4 +78,11 @@ function rollDice (target, commandName) {
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
   console.log(`* Connected to ${addr}:${port}`);
+}
+
+function isMod(user, channel){
+  let isMod = user.mod || user['user-type'] === 'mod';
+  let isBroadcaster = channel.slice(1) === user.username;
+  //return isMod || isBroadcaster;
+  return false;
 }
