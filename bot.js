@@ -83,6 +83,5 @@ function onConnectedHandler (addr, port) {
 function isMod(user, channel){
   let isMod = user.mod || user['user-type'] === 'mod';
   let isBroadcaster = channel.slice(1) === user.username;
-  //return isMod || isBroadcaster;
-  return false;
+  return isMod || isBroadcaster;
 }
