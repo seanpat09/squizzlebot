@@ -14,6 +14,7 @@ const opts = {
 // Create a client with our options
 const client = new tmi.client(opts);
 let highestRoll = 0;
+let diceLock;
 
 // Register our event handlers (defined below)
 client.on('message', onMessageHandler);
@@ -34,6 +35,10 @@ function onMessageHandler (target, userstate, msg, self) {
     rollDice(target, commandName);
   } else if(commandName === "!resetDie") {
     resetDie(target, userstate);
+  } else if (commandName.startsWith('!lock')) {
+    lockDice (target, commandName)
+  } else if (commandName === "!roll") {
+    rollLockedDice(target);
   }
   else {
     console.log(`* Unknown command ${commandName}`);
@@ -72,6 +77,27 @@ function rollDice (target, commandName) {
   client.say(
     target,
     `You rolled a ${result} with a ${sides} sided die. The highest roll so far is ${highestRoll}`);
+  console.log(`* Executed ${commandName} command`); 
+}
+
+function lockDice (target, commandName) {
+  const regex = /!lock\d{1,3}\b/g;
+  const found = commandName.match(regex);
+
+  const sides = parseInt(found[0].replace("!lock",""), 10);
+  
+  diceLock = sides;
+  client.say(
+    target,
+    `Die locked to ${sides} sides. Roll for success!`);
+}
+
+function rollLockedDice(target) {
+  const result = Math.floor(Math.random() * diceLock) + 1;
+  
+  client.say(
+    target,
+    `You rolled a ${result} with a ${diceLock} sided die.`);
   console.log(`* Executed ${commandName} command`); 
 }
 
