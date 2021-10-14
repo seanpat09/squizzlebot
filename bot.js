@@ -41,22 +41,13 @@ function onMessageHandler (target, userstate, msg, self) {
     rollLockedDice(target);
   } else if (commandName === "!laughTrack") {
     laughTrack(target);
-  } else if (commandName === "!ashctuually") {
-        client.say(
-      target,
-        "well ashctuually it was frankenstein's monster"
-    )
-  } else if (commandName === ("!thanks")) {
+  } else if (commandName === ("say thank you, squizzle bot!")) {
     client.say(
       target,
-        "Thank you squizzle bot!");
+        "\"Thank you squizzle bot!\"");
   } else if (commandName.startsWith("!throw")) {
     rockPaperScissors(target, commandName, userstate);
   }
-}
-
-function whatDo(target) {
-  
 }
 
 function resetDie(target, userstate) {
