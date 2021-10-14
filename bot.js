@@ -28,8 +28,11 @@ client.connect();
 function onMessageHandler (target, userstate, msg, self) {
   if (self) { return; } // Ignore messages from the bot
 
+  
+  
   // Remove whitespace from chat message
   const commandName = msg.trim();
+  console.log(">>>>>>", commandName.startsWith("!throw"));
 
   // If the command is known, let's execute it
   if (commandName.startsWith('!d')) {
@@ -57,6 +60,8 @@ function onMessageHandler (target, userstate, msg, self) {
       target,
         `SingsMic Bobaskoro Raid KAPOW Bobaskoro Raid SingsNote Bobaskoro Raid SingsMic`);
 
+  } else if (commandName.startsWith("!throw")) {
+    rockPaperScissors(target, commandName, userstate);
   }
 }
 
@@ -142,7 +147,38 @@ function isMod(user, channel){
   return isMod || isBroadcaster || isSquizzle;
 }
 
-function rockPaperScissors() {
+function rockPaperScissors(target, commandName, userstate) {
+  const userThrow = commandName.split(" ")[1];
+  const throws = [
+    "rock",
+    "paper",
+    "scissors"
+  ];
   
+  if (!throws.includes(userThrow)) {
+      client.say(
+        target,
+        `${userThrow} is not a rock, a paper, or a scissor BOP BOP BOP`
+      );
+  }
+  
+  const result = Math.floor(Math.random() * 3);
+  
+  let botThrow = throws[result];
+  
+  let matchResult;
+  
+  if (botThrow === "rock") {
+    if(userThrow === "scissors") {
+      matchResult = "win";
+    } else if 
+  }
+    botWins = true;
+  }
+  
+  client.say(
+        target,
+        `I threw ${throws[result]}, ${userstate.username} threw ${userThrow}`
+      );
 }
 
