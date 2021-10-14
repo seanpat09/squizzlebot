@@ -63,10 +63,12 @@ function onMessageHandler(target, userstate, msg, self) {
 }
 
 function addNewUser(username) {
+  const newUser = { "username": username, "points": 100 };
   db.get("users")
-    .push({ "username": username, points: 100 })
+    .push(newUser)
     .write();
   console.log("New user inserted in the database");
+  return newUser;
 }
 
 function addUser(target, userstate) {
@@ -188,9 +190,14 @@ function rockPaperScissors(target, commandName, userstate) {
     return;
   }
   
-  const player = db.get('posts')
+  let player = db.get('users')
     .find({ username: userstate.username })
-
+    .value()
+  console.log(player);
+  if(!player) {
+    player = addNewUser(userstate.username)
+  }
+  
   const result = Math.floor(Math.random() * 3);
 
   let botThrow = throws[result];
