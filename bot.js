@@ -26,7 +26,7 @@ client.connect();
 // Called every time a message comes in
 function onMessageHandler (target, userstate, msg, self) {
   if (self) { return; } // Ignore messages from the bot
-  
+  console.log(target);
   // Remove whitespace from chat message
   const commandName = msg.trim();
 
@@ -122,6 +122,10 @@ function laughTrack(target) {
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
+  /*client.say(
+        "#squizzleflip",
+        `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
+      );*/
   console.log(`* Connected to ${addr}:${port}`);
 }
 
@@ -196,4 +200,19 @@ function rockPaperScissors(target, commandName, userstate) {
     `I threw ${botThrow}, ${userstate.username} threw ${userThrow}. ${winMessage}`
   );
 }
+
+function streamerHype(target, username) {
+    const hypeMessages = [
+      `${username} is my favorite stream in the Citadel`,
+      `${username}, you are awesome!`,
+      `${username}, you got this!`
+    ];
+  
+    const result = Math.floor(Math.random() * hypeMessages.length);
+    client.say(
+      target,
+      `${hypeMessages[result]}`
+    );
+}
+
 
