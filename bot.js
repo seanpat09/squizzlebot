@@ -7,8 +7,7 @@ const opts = {
     password: process.env.OAUTH_TOKEN
   },
   channels: [
-    process.env.CHANNEL_NAME,
-    "bobaskoro"
+    process.env.CHANNEL_NAME
   ]
 };
 
@@ -27,12 +26,9 @@ client.connect();
 // Called every time a message comes in
 function onMessageHandler (target, userstate, msg, self) {
   if (self) { return; } // Ignore messages from the bot
-
-  
   
   // Remove whitespace from chat message
   const commandName = msg.trim();
-  console.log(">>>>>>", commandName.startsWith("!throw"));
 
   // If the command is known, let's execute it
   if (commandName.startsWith('!d')) {
@@ -54,15 +50,13 @@ function onMessageHandler (target, userstate, msg, self) {
     client.say(
       target,
         "Thank you squizzle bot!");
-  } else if (commandName === ("!boRaid")) {
-    
-    client.say(
-      target,
-        `SingsMic Bobaskoro Raid KAPOW Bobaskoro Raid SingsNote Bobaskoro Raid SingsMic`);
-
   } else if (commandName.startsWith("!throw")) {
     rockPaperScissors(target, commandName, userstate);
   }
+}
+
+function whatDo(target) {
+  
 }
 
 function resetDie(target, userstate) {
@@ -160,25 +154,55 @@ function rockPaperScissors(target, commandName, userstate) {
         target,
         `${userThrow} is not a rock, a paper, or a scissor BOP BOP BOP`
       );
+    
+      return;
   }
   
   const result = Math.floor(Math.random() * 3);
   
   let botThrow = throws[result];
   
+  //from the perspective of the bot
   let matchResult;
   
   if (botThrow === "rock") {
     if(userThrow === "scissors") {
       matchResult = "win";
-    } else if 
+    } else if(userThrow === "paper") {
+      matchResult = "lose";
+    } else if(userThrow === "rock") {
+      matchResult = "tie";
+    }
+  } else if (botThrow === "scissors") {
+      if (userThrow === "scissors") {
+        matchResult = "tie";
+      } else if(userThrow === "paper") {
+        matchResult = "win";
+      } else if(userThrow === "rock") {
+        matchResult = "lose";
+      }
+  } else if (botThrow === "paper") {
+      if (userThrow === "scissors") {
+        matchResult = "lose";
+      } else if(userThrow === "paper") {
+        matchResult = "tie";
+      } else if(userThrow === "rock") {
+        matchResult = "win";
+      }
   }
-    botWins = true;
+  
+  let winMessage;
+  if (matchResult === "win") {
+    winMessage = "I win! Let's play again!";
+  } else if (matchResult === "lose") {
+    winMessage = "I lose... INCONCEIVABLE! Why was I programmed to feel sadness?";
+  } else {
+    winMessage = "A tie! It seems that we are at an impasse...";
   }
   
   client.say(
-        target,
-        `I threw ${throws[result]}, ${userstate.username} threw ${userThrow}`
-      );
+    target,
+    `I threw ${botThrow}, ${userstate.username} threw ${userThrow}. ${winMessage}`
+  );
 }
 
