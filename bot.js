@@ -41,17 +41,7 @@ function onMessageHandler (target, userstate, msg, self) {
   } else if (commandName === "!roll") {
     rollLockedDice(target);
   } else if (commandName === "!laughTrack") {
-    client.say(
-      target,
-        "@squizzleflip how are you so <LOADING COMPLIMENT>"
-    )
-    client.say(
-      target,
-        "<LOADING COMPLETE> hilarious!"
-    )
-  }
-  else {
-    console.log(`* Unknown command ${commandName}`);
+    laughTrack(target);
   }
 }
 
@@ -108,6 +98,20 @@ function rollLockedDice(target) {
   client.say(
     target,
     `You rolled a ${result} with a ${diceLock} sided die.`);
+}
+
+function laughTrack(target) {
+  const tracks = [
+    "HA HA YOU ARE SO <LOADING COMPLIMENT>!",
+    "@squizzleflip stop, I am not programmed to laugh this much"
+  ];
+  
+  const result = Math.floor(Math.random() * tracks.length);
+  
+  client.say(
+    target,
+    tracks[result]
+  );
 }
 
 // Called every time the bot connects to Twitch chat
