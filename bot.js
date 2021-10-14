@@ -13,9 +13,7 @@ var low = require("lowdb");
 var FileSync = require("lowdb/adapters/FileSync");
 var adapter = new FileSync(".data/db.json");
 var db = low(adapter);
-db.defaults({ users: [
-    ]
-}).write();
+db.defaults({ users: [] }).write();
 
 // Create a client with our options
 const client = new tmi.client(opts);
@@ -34,7 +32,7 @@ function onMessageHandler(target, userstate, msg, self) {
   if (self) {
     return;
   } // Ignore messages from the bot
-  console.log(target);
+
   // Remove whitespace from chat message
   const commandName = msg.trim();
 
@@ -59,11 +57,16 @@ function onMessageHandler(target, userstate, msg, self) {
     addUser(target, userstate);
   } else if (commandName === "!resetDb") {
     resetDb(target, userstate);
+  } else if (commandName === "!raidMsg") {
+    client.say(
+      target,
+      " 👾SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾"
+    );
   }
 }
 
 function addNewUser(username) {
-  const newUser = { "username": username, "points": 100 };
+  const newUser = { username: username, points: 100 };
   db.get("users")
     .push(newUser)
     .write();
@@ -86,9 +89,9 @@ function resetDb(target, userstate) {
   if (!isMod(userstate, target)) {
     return;
   }
-  db.get('users')
+  db.get("users")
     .remove()
-    .write()
+    .write();
   console.log("Database cleared");
   client.say(target, "Database cleared");
 }
@@ -162,11 +165,11 @@ function onConnectedHandler(addr, port) {
   setInterval(() => {
     streamerHype("#squizzleflip", "squizzleflip");
   }, 300000);
-  /*
+
   client.say(
-      "#squizzleflip",
-      `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
-  );*/
+    "#squizzleflip",
+    `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
+  );
   console.log(`* Connected to ${addr}:${port}`);
 }
 
@@ -189,15 +192,15 @@ function rockPaperScissors(target, commandName, userstate) {
 
     return;
   }
-  
-  let player = db.get('users')
+
+  let player = db
+    .get("users")
     .find({ username: userstate.username })
-    .value()
-  console.log(player);
-  if(!player) {
-    player = addNewUser(userstate.username)
+    .value();
+  if (!player) {
+    player = addNewUser(userstate.username);
   }
-  
+
   const result = Math.floor(Math.random() * 3);
 
   let botThrow = throws[result];
@@ -234,16 +237,22 @@ function rockPaperScissors(target, commandName, userstate) {
   let winMessage;
   if (matchResult === "win") {
     winMessage = "I win! Let's play again!";
+    db.get("users")
+      .find({ username: userstate.username })
+      .assign({ points: player.points-- });
   } else if (matchResult === "lose") {
     winMessage =
       "I lose... INCONCEIVABLE! Why was I programmed to feel sadness?";
+    db.get("users")
+      .find({ username: userstate.username })
+      .assign({ points: player.points++ });
   } else {
     winMessage = "A tie! It seems that we are at an impasse...";
   }
 
   client.say(
     target,
-    `I threw ${botThrow}, ${userstate.username} threw ${userThrow}. ${winMessage}`
+    `I threw ${botThrow}, ${userstate.username} threw ${userThrow}. ${winMessage}. ${userstate.username} now has ${player.points} points`
   );
 }
 
