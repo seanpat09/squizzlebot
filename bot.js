@@ -26,12 +26,10 @@ client.connect();
 
 // Called every time a message comes in
 function onMessageHandler (target, userstate, msg, self) {
-  console.log(userstate);
   if (self) { return; } // Ignore messages from the bot
 
   // Remove whitespace from chat message
   const commandName = msg.trim();
-  console.log(commandName);
 
   // If the command is known, let's execute it
   if (commandName.startsWith('!d')) {
@@ -49,10 +47,16 @@ function onMessageHandler (target, userstate, msg, self) {
       target,
         "well ashctuually it was frankenstein's monster"
     )
-  } else if (commandName.startsWith("Bo has died")) {
+  } else if (commandName === ("!thanks")) {
     client.say(
       target,
-        "You'll get the next one for sure!");
+        "Thank you squizzle bot!");
+  } else if (commandName === ("!boRaid")) {
+    
+    client.say(
+      target,
+        `SingsMic Bobaskoro Raid KAPOW Bobaskoro Raid SingsNote Bobaskoro Raid SingsMic`);
+
   }
 }
 
@@ -137,3 +141,8 @@ function isMod(user, channel){
   let isSquizzle = user.username === "squizzleflip";
   return isMod || isBroadcaster || isSquizzle;
 }
+
+function rockPaperScissors() {
+  
+}
+
