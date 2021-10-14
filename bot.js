@@ -103,7 +103,8 @@ function rollLockedDice(target) {
 function laughTrack(target) {
   const tracks = [
     "HA HA YOU ARE SO <LOADING COMPLIMENT>!",
-    "@squizzleflip stop, I am not programmed to laugh this much"
+    "@squizzleflip stop, I am not programmed to laugh this much",
+    "cool story squizz"
   ];
   
   const result = Math.floor(Math.random() * tracks.length);
