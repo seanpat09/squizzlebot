@@ -127,10 +127,11 @@ function onConnectedHandler (addr, port) {
   setInterval(() => {
     streamerHype("#squizzleflip", "squizzleflip");
   }, 300000);
+  /*
   client.say(
       "#squizzleflip",
       `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
-  );
+  );*/
   console.log(`* Connected to ${addr}:${port}`);
 }
 
