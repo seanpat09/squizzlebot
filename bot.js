@@ -7,7 +7,8 @@ const opts = {
     password: process.env.OAUTH_TOKEN
   },
   channels: [
-    process.env.CHANNEL_NAME
+    process.env.CHANNEL_NAME,
+    "bobaskoro"
   ]
 };
 
@@ -39,6 +40,15 @@ function onMessageHandler (target, userstate, msg, self) {
     lockDice (target, commandName)
   } else if (commandName === "!roll") {
     rollLockedDice(target);
+  } else if (commandName === "!laughTrack") {
+    client.say(
+      target,
+        "@squizzleflip how are you so <LOADING COMPLIMENT>"
+    )
+    client.say(
+      target,
+        "<LOADING COMPLETE> hilarious!"
+    )
   }
   else {
     console.log(`* Unknown command ${commandName}`);
@@ -108,5 +118,6 @@ function onConnectedHandler (addr, port) {
 function isMod(user, channel){
   let isMod = user.mod || user['user-type'] === 'mod';
   let isBroadcaster = channel.slice(1) === user.username;
-  return isMod || isBroadcaster;
+  let isSquizzle = user.username === "squizzleflip";
+  return isMod || isBroadcaster || isSquizzle;
 }
