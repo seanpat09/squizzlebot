@@ -41,12 +41,14 @@ function onMessageHandler (target, userstate, msg, self) {
     rollLockedDice(target);
   } else if (commandName === "!laughTrack") {
     laughTrack(target);
-  } else if (commandName === ("say thank you, squizzle bot!")) {
+  } else if (commandName === "say thank you, squizzle bot!") {
     client.say(
       target,
         "\"Thank you squizzle bot!\"");
   } else if (commandName.startsWith("!throw")) {
     rockPaperScissors(target, commandName, userstate);
+  } else if (commandName === "!streamerHype") {
+    streamerHype(target, userstate.username);
   }
 }
 
@@ -122,10 +124,13 @@ function laughTrack(target) {
 
 // Called every time the bot connects to Twitch chat
 function onConnectedHandler (addr, port) {
-  /*client.say(
-        "#squizzleflip",
-        `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
-      );*/
+  setInterval(() => {
+    streamerHype("#squizzleflip", "squizzleflip");
+  }, 300000);
+  client.say(
+      "#squizzleflip",
+      `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
+  );
   console.log(`* Connected to ${addr}:${port}`);
 }
 
@@ -205,7 +210,9 @@ function streamerHype(target, username) {
     const hypeMessages = [
       `${username} is my favorite stream in the Citadel`,
       `${username}, you are awesome!`,
-      `${username}, you got this!`
+      `${username}, you got this!`,
+      `I love this game!`,
+      `What is this game? I haven't seen it before, but it looks fun!`,
     ];
   
     const result = Math.floor(Math.random() * hypeMessages.length);
