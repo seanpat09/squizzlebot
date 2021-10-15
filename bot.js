@@ -63,9 +63,14 @@ function onMessageHandler(target, userstate, msg, self) {
       target,
       " 👾SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾 SQUIZZLE RAID 👾"
     );
+  } else if(commandName === "!encounter") {
+    if(isMod(userstate, target)) {
+      pokebot.encounter(target, client);
+    }
+  } else if (commandName === "!pokeball") {
+      pokebot.handleThroww(userstate.username)
   }
 }
-
 function addNewUser(username) {
   const newUser = { username: username, points: 100 };
   db.get("users")

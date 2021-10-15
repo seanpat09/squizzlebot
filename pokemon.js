@@ -17,6 +17,8 @@ const pokeDex = [
   "Pikachu"
 ];
 
+const CATCH_RATE = 0.95;
+
 let currentPokemon;
 let currentThrowers;
 
@@ -24,6 +26,10 @@ const encounter = (target, client) => {
     currentThrowers = new Set();
     currentPokemon = getPokemon();
     client.say(target, `A wild ${currentPokemon} appeared!`);
+    setTimeout(
+       () => attemptCatch(target, client),
+       3000
+    )
   };
 
 const handlePokeball = (username) => {
@@ -32,15 +38,17 @@ const handlePokeball = (username) => {
 
 const attemptCatch = (target, client) => {
   //For each pokeball, there is a 5% chance of catching the pokemon
-  let pokeballPlural = currentThrowers.size > 1 ? "Poke Balls" : "Poke Ball";
+  let pokeballPlural = currentThrowers.size === 1 ? "Poke Ball" : "Poke Balls";
   
-  let chance = [...currentThrowers].reduce(x => !mySet2.has(x)))
-
-  client.say(target, `Community threw ${currentThrowers.size} ${pokeballPlural}`);
-  //Calculate chance of catching
-  //Communicate if caught
-  //If caught, store pokemon
-  //Else, say it got away!
+  let chance = 1 - Math.pow(CATCH_RATE, currentThrowers.size);
+  
+  let roll = Math.floor(Math.random() * 100);
+  
+  if(chance > roll) {
+    client.say(target, `Community threw ${currentThrowers.size} ${pokeballPlural}. We caught ${currentPokemon}!`);
+  } else {
+    client.say(target, `Community threw ${currentThrowers.size} ${pokeballPlural}. ${currentPokemon} got away!`);
+  }
 }
   
 function getPokemon() {
@@ -48,10 +56,3 @@ function getPokemon() {
 }
 
 exports.encounter = encounter;
-
-/*
-cache the current pokemon done!
-cache who is throwing 
-handle throws
-if successfully caught store pokemon
-*/
