@@ -166,14 +166,18 @@ function onConnectedHandler(addr, port) {
   setInterval(() => {
     streamerHype("#squizzleflip", "squizzleflip");
   }, 300000);
+  
+  setInterval(() => {
+    pokebot.encounter("#squizzleflip", client);  
+  }, 100000)
 
   /*client.say(
     "#squizzleflip",
     `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
   );*/
   
+  //console.log(pokebot);
   
-  pokebot.encounter("#squizzleflip", client);  
   
   console.log(`* Connected to ${addr}:${port}`);
 }

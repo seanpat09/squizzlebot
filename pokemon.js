@@ -17,13 +17,15 @@ const pokeDex = [
   "Pikachu"
 ];
 
-let current 
+let currentPokemon;
 
-  encounter(target, client) {
-    const pokemon = this.getPokemon();
+const encounter = (target, client) => {
+    const pokemon = getPokemon();
     client.say(target, `A wild ${pokemon} appeared!`);
-  }
+  };
   
-  getPokemon() {
-    return pokeDex[Math.floor(Math.random() * pokeDex.length)];
-  }
+function getPokemon() {
+  return pokeDex[Math.floor(Math.random() * pokeDex.length)];
+}
+
+exports.encounter = encounter;
