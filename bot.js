@@ -169,15 +169,7 @@ function onConnectedHandler(addr, port) {
   
   setInterval(() => {
     pokebot.encounter("#squizzleflip", client);  
-  }, 100000)
-
-  /*client.say(
-    "#squizzleflip",
-    `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
-  );*/
-  
-  //console.log(pokebot);
-  
+  }, 180000)
   
   console.log(`* Connected to ${addr}:${port}`);
 }
