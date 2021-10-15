@@ -68,7 +68,7 @@ function onMessageHandler(target, userstate, msg, self) {
       pokebot.encounter(target, client);
     }
   } else if (commandName === "!pokeball") {
-      pokebot.handleThroww(userstate.username)
+      pokebot.handlePokeball(userstate.username, target, client);
   }
 }
 function addNewUser(username) {
@@ -176,6 +176,9 @@ function onConnectedHandler(addr, port) {
     pokebot.encounter("#squizzleflip", client);  
   }, 180000)
   
+  client.say(
+    "#squizzleflip", "SQUIZZLE BOT ONLINE. PROTOCOL 3: HYPE THE STREAMER"
+  );
   console.log(`* Connected to ${addr}:${port}`);
 }
 

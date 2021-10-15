@@ -17,38 +17,47 @@ const pokeDex = [
   "Pikachu"
 ];
 
-const CATCH_RATE = 0.95;
+const MISS_RATE = 0.95;
 
 let currentPokemon;
-let currentThrowers;
+let currentTrainers;
 
 const encounter = (target, client) => {
-    currentThrowers = new Set();
+    currentTrainers = new Set();
     currentPokemon = getPokemon();
-    client.say(target, `A wild ${currentPokemon} appeared!`);
+    client.say(target, `A wild ${currentPokemon} appeared! Use !pokeball to catch it for the next 30 seconds!`);
     setTimeout(
        () => attemptCatch(target, client),
-       3000
+       30000
     )
   };
 
-const handlePokeball = (username) => {
-  currentThrowers.add(username);
+const handlePokeball = (username, target, client) => {
+  if(currentPokemon) {
+    currentTrainers.add(username);  
+  } else {
+    client.say(target, "BOP BOP BOP there are no pokemon to catch!");
+  }
 }
 
 const attemptCatch = (target, client) => {
   //For each pokeball, there is a 5% chance of catching the pokemon
-  let pokeballPlural = currentThrowers.size === 1 ? "Poke Ball" : "Poke Balls";
+  let pokeballPlural = currentTrainers.size === 1 ? "Poke Ball" : "Poke Balls";
   
-  let chance = 1 - Math.pow(CATCH_RATE, currentThrowers.size);
+  let chance = (1 - Math.pow(MISS_RATE, currentTrainers.size)) * 100;
   
   let roll = Math.floor(Math.random() * 100);
   
+  console.log(chance, roll);
+  
   if(chance > roll) {
-    client.say(target, `Community threw ${currentThrowers.size} ${pokeballPlural}. We caught ${currentPokemon}!`);
+    client.say(target, `Community threw ${currentTrainers.size} ${pokeballPlural}. We caught ${currentPokemon}!`);
   } else {
-    client.say(target, `Community threw ${currentThrowers.size} ${pokeballPlural}. ${currentPokemon} got away!`);
+    client.say(target, `Community threw ${currentTrainers.size} ${pokeballPlural}. ${currentPokemon} got away!`);
   }
+  
+  currentPokemon = null;
+  currentTrainers = new Set();
 }
   
 function getPokemon() {
@@ -56,3 +65,4 @@ function getPokemon() {
 }
 
 exports.encounter = encounter;
+exports.handlePokeball = handlePokeball;
