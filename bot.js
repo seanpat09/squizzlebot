@@ -166,9 +166,14 @@ function onConnectedHandler(addr, port) {
     streamerHype("#squizzleflip", "squizzleflip");
   }, 300000);
 
-  client.say(
+  /*client.say(
     "#squizzleflip",
     `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
+  );*/
+  
+  client.say(
+    "#squizzleflip",
+    `SQUIZZLE BOT ONLINE FOR TESTING`
   );
   console.log(`* Connected to ${addr}:${port}`);
 }
@@ -252,7 +257,7 @@ function rockPaperScissors(target, commandName, userstate) {
 
   client.say(
     target,
-    `I threw ${botThrow}, ${userstate.username} threw ${userThrow}. ${winMessage}. ${userstate.username} now has ${player.points} points`
+    `I threw ${botThrow}, ${userstate.username} threw ${userThrow}. ${winMessage} ${userstate.username} now has ${player.points} points`
   );
 }
 
