@@ -171,10 +171,10 @@ function onConnectedHandler(addr, port) {
     `SQUIZZLE BOT OPERATIONAL. PROTOCOL 3: HYPE THE STREAMER`
   );*/
   
-  client.say(
+  /*client.say(
     "#squizzleflip",
     `SQUIZZLE BOT ONLINE FOR TESTING`
-  );
+  );*/
   console.log(`* Connected to ${addr}:${port}`);
 }
 
