@@ -1,10 +1,10 @@
 {
   "name": "twitch-chatbot",
   "version": "0.0.1",
-  "description": "A simple app chatbot example. Using the command !echo will simply repeat the message.",
-  "main": "bot.js",
+  "description": "A chat bot for twitch",
+  "main": "main.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node main.js"
   },
   "dependencies": {
     "express": "^4.16.4",
@@ -15,7 +15,7 @@
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/twitch-chatbot"
+    "url": "https://github.com/seanpat09/squizzlebot"
   },
   "license": "MIT",
   "keywords": [
