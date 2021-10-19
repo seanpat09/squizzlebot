@@ -81,7 +81,7 @@ function storePokemon(pokeName, db) {
 }
 
 function pokedex(target, client, db) {
-  console.log(db.get("pokemon"));
+  client.say(target, "Here are all the pokemon we have caught so far! " + JSON.stringify(db.get("pokemon").value()));
 }
 
 exports.encounter = encounter;
