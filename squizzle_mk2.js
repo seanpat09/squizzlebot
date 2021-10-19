@@ -10,6 +10,7 @@ const opts = {
 };
 
 const mk2client = new tmi.client(opts);
+console.log(opts.identity.username);
 
 function initSquizzleBot() {
   mk2client.on("message", onMessageHandler);
