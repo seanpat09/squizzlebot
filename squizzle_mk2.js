@@ -47,9 +47,7 @@ function onJoinHandler(channel, username, self) {
 
 function shoutOut(target, command, userstate) {
   let username = command.split(" ")[1];
-  console.log("line 49!")
   if(utils.isMod(userstate, target) && username) {
-    console.log("In here!")
     mk2client.say(target, `Check and follow ${username} at https://twitch.com/${username}`);
   }
 }

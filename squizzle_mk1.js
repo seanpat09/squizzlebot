@@ -17,7 +17,10 @@ var low = require("lowdb");
 var FileSync = require("lowdb/adapters/FileSync");
 var adapter = new FileSync(".data/db.json");
 var db = low(adapter);
-db.defaults({ users: [] }).write();
+db.defaults(
+  { users: [] },
+  { pokemon: [] }
+).write();
 
 // Create a client with our options
 const client = new tmi.client(opts);
@@ -148,7 +151,7 @@ function onConnectedHandler(addr, port) {
   }, 300000);
 
   setInterval(() => {
-    pokebot.encounter("#squizzleflip", client);
+    pokebot.encounter("#squizzleflip", client, db);
   }, 180000);
 
   // client.say(

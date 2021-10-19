@@ -17,12 +17,12 @@ const pokeDex = [
   "Pikachu"
 ];
 
-const MISS_RATE = 0.95;
+const MISS_RATE = 0.0;
 
 let currentPokemon;
 let currentTrainers;
 
-const encounter = (target, client) => {
+const encounter = (target, client, db) => {
     currentTrainers = new Set();
     currentPokemon = getPokemon();
     client.say(target, `A wild ${currentPokemon} appeared! Use !pokeball to catch it for the next 30 seconds!`);
@@ -40,7 +40,7 @@ const handlePokeball = (username, target, client) => {
   }
 }
 
-const attemptCatch = (target, client) => {
+const attemptCatch = (target, client, db) => {
   //For each pokeball, there is a 5% chance of catching the pokemon
   let pokeballPlural = currentTrainers.size === 1 ? "Poke Ball" : "Poke Balls";
   
@@ -50,8 +50,12 @@ const attemptCatch = (target, client) => {
   
   console.log(chance, roll);
   
-  if(chance > roll) {
+  const isCaught = chance > roll;
+  
+  if(isCaught) {
     client.say(target, `Community threw ${currentTrainers.size} ${pokeballPlural}. We caught ${currentPokemon}!`);
+    storePokemon(currentPokemon, db)
+    
   } else {
     client.say(target, `Community threw ${currentTrainers.size} ${pokeballPlural}. ${currentPokemon} got away!`);
   }
@@ -62,6 +66,18 @@ const attemptCatch = (target, client) => {
   
 function getPokemon() {
   return pokeDex[Math.floor(Math.random() * pokeDex.length)];
+}
+
+function storePokemon(pokeName, db) {
+  let entry = {
+    type: pokeName,
+    caught_date: new Date(),
+    nickname: ""
+  };
+  db.get("pokemon")
+    .push(entry)
+    .write();
+  console.log("New pokemon inserted in the database");
 }
 
 exports.encounter = encounter;
