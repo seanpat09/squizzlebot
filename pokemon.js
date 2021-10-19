@@ -17,7 +17,7 @@ const pokeDex = [
   "Pikachu"
 ];
 
-const MISS_RATE = 0.0;
+const MISS_RATE = 0.95;
 
 let currentPokemon;
 let currentTrainers;
@@ -27,7 +27,7 @@ const encounter = (target, client, db) => {
     currentPokemon = getPokemon();
     client.say(target, `A wild ${currentPokemon} appeared! Use !pokeball to catch it for the next 30 seconds!`);
     setTimeout(
-       () => attemptCatch(target, client),
+       () => attemptCatch(target, client, db),
        30000
     )
   };
@@ -80,5 +80,10 @@ function storePokemon(pokeName, db) {
   console.log("New pokemon inserted in the database");
 }
 
+function pokedex(target, client, db) {
+  console.log(db.data.pokemon);
+}
+
 exports.encounter = encounter;
 exports.handlePokeball = handlePokeball;
+exports.pokedex = pokedex;

@@ -28,7 +28,6 @@ function onMessageHandler(target, userstate, msg, self) {
   
   const commandName = msg.trim();
 
-  console.log(commandName, commandName.startsWith("!shoutout"));
   if (commandName.startsWith("!shoutout")) {
     shoutOut(target, commandName, userstate);
   }

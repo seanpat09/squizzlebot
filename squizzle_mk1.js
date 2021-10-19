@@ -68,12 +68,14 @@ function onMessageHandler(target, userstate, msg, self) {
     hype.raidMessage(target, client);
   } else if (commandName === "!encounter") {
     if (utils.isMod(userstate, target)) {
-      pokebot.encounter(target, client);
+      pokebot.encounter(target, client, db);
     }
   } else if (commandName === "!pokeball") {
     pokebot.handlePokeball(userstate.username, target, client);
+  } else if (commandName === "!pokedex") {
+    pokebot.pokedex(target, client, db);
   } else if (commandName === "!testing") {
-    if (utils.isMod(userstate, target)) {
+      if (utils.isMod(userstate, target)) {
       client.say(target, "testing 324");
     }
   }
