@@ -28,7 +28,7 @@ function onMessageHandler(target, userstate, msg, self) {
 
 function onConnectedHandler() {
     mk2client.say(
-    "#squizzleflip", "SQUIZZLE BOT ONLINE. INITIATING WELCOME WAGON PROTOCOL."
+    "#squizzleflip", "SQUIZZLE BOT ONLINE. INITIATING WELCOME WAGON PROTOCOL!"
   );
 }
 
