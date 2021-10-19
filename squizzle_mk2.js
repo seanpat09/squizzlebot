@@ -3,20 +3,20 @@ const tmi = require("tmi.js");
 // Define configuration options
 const opts = {
   identity: {
-    username: process.env.BOT_USERNAME,
-    password: process.env.OAUTH_TOKEN
+    username: process.env.MK2_USERNAME,
+    password: process.env.MK2_OAUTH_TOKEN
   },
   channels: [process.env.CHANNEL_NAME]
 };
 
-const client = new tmi.client(opts);
+const mk2client = new tmi.client(opts);
 
 function initSquizzleBot() {
-  client.on("message", onMessageHandler);
-  client.on("connected", onConnectedHandler);
+  mk2client.on("message", onMessageHandler);
+  mk2client.on("connected", onConnectedHandler);
 
   // Connect to Twitch:
-  client.connect();
+  mk2client.connect();
 }
 
 function onMessageHandler(target, userstate, msg, self) {
@@ -26,8 +26,8 @@ function onMessageHandler(target, userstate, msg, self) {
 }
 
 function onConnectedHandler() {
-    client.say(
-    "#squizzleflip", "TESTING SQUIZZLE mk2 BOT"
+    mk2client.say(
+    "#squizzleflip", "SQUIZZLE BOT ONLINE. INITIATING WELCOME WAGON PROTOCOL."
   );
 }
 

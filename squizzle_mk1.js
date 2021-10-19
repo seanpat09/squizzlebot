@@ -7,8 +7,8 @@ const rps = require("./rps.js");
 // Define configuration options
 const opts = {
   identity: {
-    username: process.env.BOT_USERNAME,
-    password: process.env.OAUTH_TOKEN
+    username: process.env.MK1_USERNAME,
+    password: process.env.MK1_OAUTH_TOKEN
   },
   channels: [process.env.CHANNEL_NAME]
 };
