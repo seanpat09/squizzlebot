@@ -23,7 +23,11 @@ function initSquizzleBot() {
 function onMessageHandler(target, userstate, msg, self) {
   if (self) {
     return;
-  } 
+  }
+  
+  if(userstate.username === "squizzle_mk1") {
+    mk2client.say(target, "hello fellow bot");
+  }
 }
 
 function onConnectedHandler() {
