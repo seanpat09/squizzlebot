@@ -15,7 +15,7 @@ console.log(opts.identity.username);
 function initSquizzleBot() {
   mk2client.on("message", onMessageHandler);
   mk2client.on("connected", onConnectedHandler);
-  mk2client.on("join", onJoinHandler);
+  //mk2client.on("join", onJoinHandler);
   // Connect to Twitch:
   mk2client.connect();
 }
@@ -27,14 +27,18 @@ function onMessageHandler(target, userstate, msg, self) {
 }
 
 function onConnectedHandler() {
-  mk2client.say(
-    "#squizzleflip",
-    "SQUIZZLE BOT ONLINE. INITIATING WELCOME WAGON PROTOCOL!"
-  );
+  // mk2client.say(
+  //   "#squizzleflip",
+  //   "SQUIZZLE BOT ONLINE. INITIATING WELCOME WAGON PROTOCOL!"
+  // );
 }
 
 function onJoinHandler(channel, username, self) {
   mk2client.say("#squizzleflip", `Welcome in ${username}`);
+}
+
+function shoutOut(target, username) {
+  mk2client.say(target, `Check and follow ${username} at https://twitch.com/${u`)
 }
 
 exports.initSquizzleBot = initSquizzleBot;
