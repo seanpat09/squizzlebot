@@ -18,7 +18,7 @@ function rockPaperScissors(target, commandName, userstate, client, db) {
     .find({ username: userstate.username })
     .value();
   if (!player) {
-    player = utils.addNewUser(userstate.username);
+    player = utils.addNewUser(userstate.username, db);
   }
 
   const result = Math.floor(Math.random() * 3);

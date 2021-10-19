@@ -1,4 +1,5 @@
 const tmi = require("tmi.js");
+const utils = require("./utils.js");
 
 // Define configuration options
 const opts = {
@@ -24,6 +25,13 @@ function onMessageHandler(target, userstate, msg, self) {
   if (self) {
     return;
   }
+  
+  const commandName = msg.trim();
+
+  console.log(commandName, commandName.startsWith("!shoutout"));
+  if (commandName.startsWith("!shoutout")) {
+    shoutOut(target, commandName, userstate);
+  }
 }
 
 function onConnectedHandler() {
@@ -37,8 +45,13 @@ function onJoinHandler(channel, username, self) {
   mk2client.say("#squizzleflip", `Welcome in ${username}`);
 }
 
-function shoutOut(target, username) {
-  mk2client.say(target, `Check and follow ${username} at https://twitch.com/${u`)
+function shoutOut(target, command, userstate) {
+  let username = command.split(" ")[1];
+  console.log("line 49!")
+  if(utils.isMod(userstate, target) && username) {
+    console.log("In here!")
+    mk2client.say(target, `Check and follow ${username} at https://twitch.com/${username}`);
+  }
 }
 
 exports.initSquizzleBot = initSquizzleBot;
